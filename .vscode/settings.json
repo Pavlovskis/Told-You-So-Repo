@@ -1,0 +1,6 @@
+{
+    "rust-analyzer.linkedProjects": [
+    ],
+    "rust-analyzer.showUnlinkedFileNotification": false,
+    "window.zoomLevel": -1
+}
