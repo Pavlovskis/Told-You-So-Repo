@@ -1,24 +1,24 @@
+
+workspace = { members = ["trees", "advent", "algos", "graph", "structs"] }
+
 [package]
 name = "main"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[lib]
-name="process_data2"
-path="./process_data2/src/frame.rs"
-
 [dependencies]
+
+structs = { path = "./structs" }
+trees = { path = "./trees" }
+advent = { path = "./advent" }
+algos = { path = "./algos" }
+graph = { path = "./graph" }
+
+
 chrono = { version="0.4.31", features=["serde"] }
 tokio = { version="1.33.0", features=["full"] }
 
-image = "0.24.7"
 num-complex = "0.4.3"
 rand="0.8.5"
-hex="0.4.3"
-memuse="0.2.1"
 num-bigint = { version="0.4.3", features=["rand"]}
 colored = "2.1.0"
-regex = "1.8.4"
-sha2 = "0.10.8"
