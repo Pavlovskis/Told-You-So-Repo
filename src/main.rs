@@ -20,34 +20,36 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let mut num_gen: Generator = Generator::new(Some(42));
 
+    println!("Generating Numbers ...\n");
+    let mut batches:Vec<Vec<usize>> = Vec::with_capacity(quantities.len());
+    for quantity in quantities {
+        batches.push(num_gen.generate_batch(quantity, (0, 50_000)));
+    }
+
     println!("### Heap Benchmarks ###");
 
-    for quantity in quantities.iter() {
-        let vals:Vec<usize> = num_gen.generate_batch(*quantity, (0, 100_000));
-
+    for batch in batches.iter() {
         for percent in percents.iter() {
             let t_now:Instant = Instant::now();
     
-            let total:usize = ((percent / 100.0) * *quantity as f32) as usize;
-            let _ = HeapFindSmallest::find_smallest(&vals, total);
+            let total:usize = ((percent / 100.0) * batch.len() as f32) as usize;
+            let _ = HeapFindSmallest::find_smallest(batch, total);
             
-            println!("[Q {} | P {}] => {:?}", quantity, percent, t_now.elapsed());
+            println!("[Q {} | P {}] => {:?}", batch.len(), percent, t_now.elapsed());
         }
         println!();
     }
 
     println!("### List Benchmarks ###");
 
-    for quantity in quantities.iter() {
-        let vals:Vec<usize> = num_gen.generate_batch(*quantity, (0, 100000));
-
+    for batch in batches.iter() {
         for percent in percents.iter() {
             let t_now:Instant = Instant::now();
     
-            let total:usize = ((percent / 100.0) * *quantity as f32) as usize;
-            let _ = ListFindSmallest::find_smallest(&vals, total);
+            let total:usize = ((percent / 100.0) * batch.len() as f32) as usize;
+            let _ = ListFindSmallest::find_smallest(batch, total);
             
-            println!("[Q {} | P {}] => {:?}", quantity, percent, t_now.elapsed());
+            println!("[Q {} | P {}] => {:?}", batch.len(), percent, t_now.elapsed());
         }
         println!();
     }
